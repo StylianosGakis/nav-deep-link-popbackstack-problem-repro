@@ -1,5 +1,6 @@
 package com.stylianosgakis.navdeeplinkpopbackstackrepro
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,7 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -41,8 +43,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun App() {
   Surface(Modifier.fillMaxSize()) {
-    val localUriHandler = LocalUriHandler.current
     val navController = rememberNavController()
+    val context = LocalContext.current
     NavHost(
       navController = navController,
       "A"
@@ -52,7 +54,9 @@ fun App() {
           Modifier.fillMaxSize(),
           contentAlignment = Alignment.Center,
         ) {
-          IconButton(onClick = { localUriHandler.openUri("https://repro.link/graph") }) {
+          IconButton(
+            onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, "https://repro.link/graph".toUri())) },
+          ) {
             Icon(Icons.AutoMirrored.Default.ArrowForward, "Start screen")
           }
         }
