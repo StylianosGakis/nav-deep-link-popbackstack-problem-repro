@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import com.stylianosgakis.navdeeplinkpopbackstackrepro.ui.theme.NavdeeplinkpopbackstackreproTheme
@@ -58,27 +57,25 @@ fun App() {
           }
         }
       }
-      navigation(startDestination = "B", route = "graphRoute") {
-        composable(
-          "B",
-          deepLinks = listOf(navDeepLink { uriPattern = "https://repro.link/graph" })
+      composable(
+        "B",
+        deepLinks = listOf(navDeepLink { uriPattern = "https://repro.link/graph" })
+      ) {
+        Box(
+          Modifier.fillMaxSize(),
+          contentAlignment = Alignment.Center,
         ) {
-          Box(
-            Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
+          Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
           ) {
-            Column(
-              horizontalAlignment = Alignment.CenterHorizontally,
-              verticalArrangement = Arrangement.Center,
-            ) {
-              IconButton(onClick = { navController.navigateUp() }) {
-                Icon(Icons.AutoMirrored.Default.ArrowBack, "navigate up")
-              }
-              Text("Above does navigateUp()")
-              Text("Below does popBackstack()")
-              Button(onClick = { navController.popBackStack() }) {
-                Text("Pop backstack")
-              }
+            IconButton(onClick = { navController.navigateUp() }) {
+              Icon(Icons.AutoMirrored.Default.ArrowBack, "navigate up")
+            }
+            Text("Above does navigateUp()")
+            Text("Below does popBackstack()")
+            Button(onClick = { navController.popBackStack() }) {
+              Text("Pop backstack")
             }
           }
         }
